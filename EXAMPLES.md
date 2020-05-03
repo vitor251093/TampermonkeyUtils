@@ -1,28 +1,28 @@
 # Examples
 Those are some samples of circunstances in which you may use any of those commands.
 
-## removeElements
+## remove(array)
 Let's say the page you visit has some ads your ad blocker couldn't detect, and you had to do some more advanced stuff to get their DOM elements. You could use that command like that, so you delete all of them at once:
 ```
-tmu.removeElements(list);
+tmu.remove(list);
 ```
 
-## removeElementById
+## remove({id})
 Let's say the page you visit has a header with a giant ad, which your AdBlocker didn't recognized properly. Although, that header has an ID. If that ID was `my_header`, you could use that command like that:
 ```
-tmu.removeElementById("my_header");
+tmu.remove({id:"my_header"});
 ```
 
-## removeElementsByTagName
+## remove({tag})
 Let's say the page you visit shows its ads inside iframes. You could just hide them, but iframes usually consume much more resources, since they are whole new pages being opened. If the website does no other use for iframes, you can use that command like that:
 ```
-tmu.removeElementsByTagName("iframe");
+tmu.remove({tag:"iframe"});
 ```
 
-## removeElementsByClassName
+## remove({className})
 Let's say the page you visit shows its ads like posts. If the website gives those posts their own unique tags, those may be turned into classes depending of the page framework. If those posts have the tag `ad-tag`, you can use that command like that:
 ```
-tmu.removeElementsByClassName("ad-tag");
+tmu.remove({className:"ad-tag"});
 ```
 
 ## addStyle & css
