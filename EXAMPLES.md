@@ -49,6 +49,10 @@ tmu.hide("body > div");
 Let's say the page you visit shows a floating ad, but it's not there in the moment you launch the page; it appears later. If that ad is always contained inside an iframe, and the website does no other use for iframes, you can use that command like that:
 ```
 tmu.loop(2, function() {
-    tmu.removeElementsByTagName("iframe");
+    tmu.remove({tag:"iframe"});
 });
+```
+The following also works:
+```
+tmu.remove({tag:"iframe"}, {loop:2});
 ```
