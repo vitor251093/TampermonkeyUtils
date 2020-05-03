@@ -16,10 +16,10 @@ Create a new userscript with the contents of tmu.js, and move it to the top of y
 Those are its regular use features:
 |               Function               | Description |
 |:------------------------------------:|:-----------:|
-| tmu.removeElements(list) | Remove all the elements in the given list (it doesn't need to be an Array) |
-| tmu.removeElementById(id) | Remove the element with the matching ID |
-| tmu.removeElementsByTagName(tagName) | Remove the elements with the specified tag |
-| tmu.removeElementsByClassName(className) | Remove the elements with the specified class |
+| tmu.el(params) | Shorten document.getElement* functions, depending of the parameters |
+| tmu.parent(el, params) | Returns a parent of a certain element (the first that matches with its parameters)  |
+| tmu.anyClassMatches(el, func) | Returns if one of the classes of a certain element returns true for func |
+| tmu.remove(params) | Remove the elements that match with the parameters |
 | tmu.hide(id) | Hides a specific element, an array of elements, or element(s) by their CSS identifier. It also returns an object with an `exception` function, which lets you specify exceptions to your `hide` command |
 | tmu.loop(seconds, func) | Runs the specified function each X seconds |
 
