@@ -18,9 +18,9 @@ Those are its regular use features:
 |:------------------------------------:|:-----------:|
 | tmu.removeElements(list) | Remove all the elements in the given list (it doesn't need to be an Array) |
 | tmu.removeElementById(id) | Remove the element with the matching ID |
-| tmu.removeElementsByTagName(tagName) | Remove the elements with specified tag |
-| tmu.removeElementsByClassName(className) | Remove the elements with specified class |
-| tmu.hide(id) | Hides a specific element, an array of elements, or element(s) by their CSS identifier |
+| tmu.removeElementsByTagName(tagName) | Remove the elements with the specified tag |
+| tmu.removeElementsByClassName(className) | Remove the elements with the specified class |
+| tmu.hide(id) | Hides a specific element, an array of elements, or element(s) by their CSS identifier. It also returns an object with an `exception` function, which lets you specify exceptions to your `hide` command |
 | tmu.loop(seconds, func) | Runs the specified function each X seconds |
 
 And those are its "advanced" features, for those with knowledge in CSS:
@@ -28,3 +28,6 @@ And those are its "advanced" features, for those with knowledge in CSS:
 |:------------------------------------:|:-----------:|
 | tmu.addStyle(style) | Adds CSS content to the page |
 | tmu.css(id, key, value) | Add a style to a specific element, to an array of elements, or to an element CSS identifier |
+
+## Could you give me some examples?
+Check EXAMPLES.md.
