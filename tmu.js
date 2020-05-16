@@ -18,7 +18,7 @@ window.tmu = {
             return [id];
         }
         if (!this.isEmpty(id.id)) {
-            return [document.getElementById(id.id)];
+            return [document.getElementById(id.id)].filter(el => el !== null);
         }
         if (!this.isEmpty(id.className)) {
             return Array.from(document.getElementsByClassName(id.className));
@@ -89,11 +89,14 @@ window.tmu = {
         if (!this.isEmpty(opts.loop)) {
             var loop = opts.loop;
             delete opts.loop;
-            return this.loop(loop, () => {that.remove(id,opts)});
+            return this.loop(loop, () => that.remove(id,opts));
         }
 
         var exceptions = this.isEmpty(opts.exceptions) ? [] : this.el(opts.exceptions);
-        this.el(id).filter(el => !exceptions.includes(el)).forEach(el => el.remove());
+        var list = this.el(id).filter(el => !exceptions.includes(el));
+        var amountOfElsToRemove = list.length;
+        list.forEach(el => el.remove());
+        return amountOfElsToRemove > 0;
     },
     addStyle: function(styleVal) {
         var style = this._styleEl;
@@ -103,6 +106,7 @@ window.tmu = {
             this._styleEl = style;
         }
         style.innerHTML += styleVal;
+        return true;
     },
     css: function(id, key, value, opts) {
         var that = this;
@@ -110,18 +114,20 @@ window.tmu = {
         if (!this.isEmpty(opts.loop)) {
             var loop = opts.loop;
             delete opts.loop;
-            return this.loop(loop, () => {that.css(id,key,value,opts)});
+            return this.loop(loop, () => that.css(id,key,value,opts));
         }
 
         if (typeof id === 'string') {
             return this.addStyle(id + " {" + key + ":" + value + (opts.important?" !important":"") + ";}");
         }
         if (Array.isArray(id)) {
-            return id.forEach(realId => that.css(realId, key, value, opts));
+            id.forEach(realId => that.css(realId, key, value, opts));
+            return true;
         }
         this.el(id).forEach(realId => {
-            realId.style = (realId.style || "") + "; " + key + ":" + value + (opts.important?" !important":"") + "; ";
+            realId.style.cssText = (realId.style?(realId.style.cssText||""):"") + "; " + key + ":" + value + (opts.important?" !important":"") + "; ";
         });
+        return true;
     },
     hide: function(id, opts) {
         var that = this;
@@ -129,7 +135,7 @@ window.tmu = {
         if (!this.isEmpty(opts.loop)) {
             var loop = opts.loop;
             delete opts.loop;
-            return this.loop(loop, () => {that.hide(id,opts)});
+            return this.loop(loop, () => that.hide(id,opts));
         }
 
         return this._lambda(id, realId => that.css(realId,      "display", "none",  {important:true}),
@@ -140,11 +146,18 @@ window.tmu = {
     isEmpty: function(val) {
         return val === undefined || val === null;
     },
-    loop: function(seconds, func) {
+
+    _loopRunsPerSecond: 10,
+    loop: function(times, func) {
+        var runsPerSecond = this._loopRunsPerSecond;
+        var realTimes = times*runsPerSecond;
+        var ret = null;
         var loopFunc = function() {
-            func();
-            setTimeout(loopFunc, seconds*1000);
+            realTimes--;
+            ret = func();
+            if (realTimes > 0) setTimeout(loopFunc, 1000/runsPerSecond);
         };
         loopFunc();
+        return ret;
     }
 };
